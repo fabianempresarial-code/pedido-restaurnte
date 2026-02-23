@@ -3,36 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido Completo - Restaurante</title>
+    <title>Pedido Express - Menú Semanal</title>
     <style>
-        :root { --primary: #e67e22; --secondary: #27ae60; --bg: #f8f9fa; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); padding: 15px; }
-        .container { max-width: 480px; background: white; padding: 25px; border-radius: 20px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        :root { --primary: #e67e22; --whatsapp: #25d366; --bg: #fdfefe; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); padding: 15px; color: #2c3e50; }
+        .container { max-width: 480px; background: white; padding: 25px; border-radius: 20px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         h2 { color: var(--primary); text-align: center; margin-bottom: 5px; }
-        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #f1f1f1; border-radius: 12px; background: #fff; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9em; color: #444; }
-        select, input[type="text"], textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
-        
-        /* Estilo para los adicionales (Checkboxes) */
-        .extra-item { display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #eee; cursor: pointer; }
-        .extra-item:last-child { border-bottom: none; }
-        .extra-item input { width: 18px; height: 18px; cursor: pointer; }
-        .price { margin-left: auto; color: #27ae60; font-weight: bold; font-size: 0.85em; }
-
-        .btn-order { width: 100%; background: var(--secondary); color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        .btn-order:hover { background: #219150; transform: scale(1.02); }
+        .badge { background: #fff3e0; color: #e65100; padding: 5px 12px; border-radius: 15px; font-size: 0.8em; font-weight: bold; }
+        .section { margin-bottom: 20px; padding: 15px; background: #fafafa; border-radius: 12px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9em; }
+        select, input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; margin-bottom: 10px; }
+        .extra-item { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #eee; font-size: 0.9em; }
+        .btn-order { width: 100%; background: var(--whatsapp); color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        .btn-order:hover { background: #1ebd5a; transform: translateY(-2px); }
+        .remember-me { font-size: 0.85em; display: flex; align-items: center; gap: 8px; color: #666; cursor: pointer; }
+        .remember-me input { width: auto; margin: 0; }
     </style>
 </head>
 <body onload="inicializarApp()">
 
 <div class="container">
-    <h2>🍴 Pedido El Buen Gusto</h2>
-    <div style="text-align: center; margin-bottom: 15px;"><span id="fechaHoy" style="color: #888; font-size: 0.9em;"></span></div>
+    <h2>🍽️ Pedido El Sabor</h2>
+    <div style="text-align: center; margin-bottom: 15px;"><span id="fechaHoy" class="badge"></span></div>
     
     <form id="orderForm">
         <div class="section">
-            <label>🍲 Plato del Día (Selecciona el día):</label>
-            <select id="diaSemana" onchange="actualizarMenu()" style="margin-bottom: 10px; background: #fffceb;">
+            <label>📅 Día:</label>
+            <select id="diaSemana" onchange="actualizarMenu()" style="background: #fff9c4;">
                 <option value="Lunes">Lunes</option>
                 <option value="Martes">Martes</option>
                 <option value="Miércoles">Miércoles</option>
@@ -40,120 +37,110 @@
                 <option value="Viernes">Viernes</option>
                 <option value="Sábado">Sábado</option>
             </select>
-            <select id="platoSeleccionado" required></select>
+            <label>🍲 Plato Principal:</label>
+            <select id="platoSeleccionado"></select>
         </div>
 
         <div class="section">
-            <label>➕ ¿Deseas algún adicional?</label>
-            <div class="extra-item">
-                <input type="checkbox" name="adicional" value="Porción de Aguacate" data-precio="2000"> 
-                <span>Porción de Aguacate</span>
-                <span class="price">+$2.000</span>
-            </div>
-            <div class="extra-item">
-                <input type="checkbox" name="adicional" value="Huevo Frito" data-precio="1500"> 
-                <span>Huevo Frito</span>
-                <span class="price">+$1.500</span>
-            </div>
-            <div class="extra-item">
-                <input type="checkbox" name="adicional" value="Tajada de Maduro" data-precio="1000"> 
-                <span>Tajada de Maduro</span>
-                <span class="price">+$1.000</span>
-            </div>
-            <div class="extra-item">
-                <input type="checkbox" name="adicional" value="Postre del Día" data-precio="3000"> 
-                <span>Postre del Día</span>
-                <span class="price">+$3.000</span>
-            </div>
-        </div>
-
-        <div class="section">
-            <label>🥤 Elige tu Bebida:</label>
+            <label>➕ Adicionales:</label>
+            <div class="extra-item"><input type="checkbox" name="extra" value="Aguacate"> Aguacate (+$2.000)</div>
+            <div class="extra-item"><input type="checkbox" name="extra" value="Huevo"> Huevo (+$1.500)</div>
+            
+            <label style="margin-top:15px;">🥤 Bebida:</label>
             <select id="bebida">
-                <option value="Jugo Natural (Incluido)">Jugo Natural (Incluido)</option>
-                <option value="Limonada Cerezada (+2500)">Limonada Cerezada (+$2.500)</option>
-                <option value="Gaseosa 350ml (+3000)">Gaseosa 350ml (+$3.000)</option>
-                <option value="Sin Bebida">Sin Bebida</option>
+                <option value="Jugo del día">Jugo del día (Incluido)</option>
+                <option value="Limonada (+2.500)">Limonada (+$2.500)</option>
+                <option value="Gaseosa (+3.000)">Gaseosa (+$3.000)</option>
             </select>
         </div>
 
         <div class="section">
             <label>👤 Datos de Entrega:</label>
-            <input type="text" id="nombre" placeholder="Tu nombre" required style="margin-bottom: 10px;">
+            <input type="text" id="nombre" placeholder="Tu Nombre" required>
             <input type="text" id="direccion" placeholder="Dirección y Barrio" required>
-            <textarea id="notas" rows="2" placeholder="Notas: Ej. El timbre no sirve..." style="margin-top: 10px;"></textarea>
+            <label class="remember-me">
+                <input type="checkbox" id="recordarDatos" checked> Recordar mis datos en este dispositivo
+            </label>
+            <textarea id="notas" rows="2" placeholder="Instrucciones adicionales..."></textarea>
         </div>
 
-        <button type="button" class="btn-order" onclick="enviarWhatsApp()">✅ Enviar Pedido por WhatsApp</button>
+        <button type="button" class="btn-order" onclick="enviarWhatsApp()">✅ Enviar a WhatsApp</button>
     </form>
 </div>
 
 <script>
     const menus = {
-        "Lunes": ["Lentejas con Chorizo", "Pollo al Horno"],
-        "Martes": ["Carne en Bistec", "Filete de Pescado"],
-        "Miércoles": ["Ajiaco Santafereño", "Cerdo Apanado"],
+        "Lunes": ["Frijolada", "Pollo al Curry", "Pollo Sudado"],
+        "Martes": ["Carne Asada", "Pescado Frito"],
+        "Miércoles": ["Ajiaco", "Lomo de Cerdo"],
         "Jueves": ["Sancocho", "Arroz con Pollo"],
         "Viernes": ["Bandeja Paisa", "Sobrebarriga"],
-        "Sábado": ["Especial Parrilla", "Mondongo"]
+        "Sábado": ["Sancocho de Gallina", "Parrillada"]
     };
 
     function inicializarApp() {
+        // 1. Detectar fecha
         const hoy = new Date();
         const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
         const nombreDia = dias[hoy.getDay()];
-        
-        document.getElementById('fechaHoy').innerText = `Hoy es ${nombreDia} ${hoy.getDate()}/${hoy.getMonth()+1}`;
+        document.getElementById('fechaHoy').innerText = `Hoy es ${nombreDia}, ${hoy.getDate()}/${hoy.getMonth()+1}`;
         
         const selectDia = document.getElementById('diaSemana');
         if(hoy.getDay() !== 0) selectDia.value = nombreDia;
-        
         actualizarMenu();
+
+        // 2. Cargar datos recordados
+        if (localStorage.getItem('nombre')) {
+            document.getElementById('nombre').value = localStorage.getItem('nombre');
+            document.getElementById('direccion').value = localStorage.getItem('direccion');
+        }
     }
 
     function actualizarMenu() {
         const dia = document.getElementById('diaSemana').value;
         const selectPlato = document.getElementById('platoSeleccionado');
         selectPlato.innerHTML = '';
-        menus[dia].forEach(plato => {
+        menus[dia].forEach(p => {
             let opt = document.createElement('option');
-            opt.value = plato; opt.text = plato;
+            opt.value = p; opt.text = p;
             selectPlato.appendChild(opt);
         });
     }
 
     function enviarWhatsApp() {
-        const telefono = "573143996019"; // CAMBIA TU NÚMERO
-        const dia = document.getElementById('diaSemana').value;
-        const plato = document.getElementById('platoSeleccionado').value;
-        const bebida = document.getElementById('bebida').value;
         const nombre = document.getElementById('nombre').value;
         const direccion = document.getElementById('direccion').value;
-        const notas = document.getElementById('notas').value || "Ninguna";
-
-        // Obtener adicionales seleccionados
-        let adicionales = [];
-        document.querySelectorAll('input[name="adicional"]:checked').forEach(item => {
-            adicionales.push(item.value);
-        });
-        let textoAdicionales = adicionales.length > 0 ? adicionales.join(", ") : "Ninguno";
 
         if (!nombre || !direccion) {
-            alert("Completa nombre y dirección");
+            alert("Por favor completa tus datos.");
             return;
         }
 
-        const mensaje = `*NUEVO PEDIDO - ${dia.toUpperCase()}*%0A` +
-                        `--------------------------%0A` +
-                        `*Cliente:* ${nombre}%0A` +
-                        `*Plato:* ${plato}%0A` +
-                        `*Adicionales:* ${textoAdicionales}%0A` +
-                        `*Bebida:* ${bebida}%0A` +
-                        `*Dirección:* ${direccion}%0A` +
-                        `*Notas:* ${notas}%0A` +
-                        `--------------------------`;
+        // Guardar datos si el check está activo
+        if (document.getElementById('recordarDatos').checked) {
+            localStorage.setItem('nombre', nombre);
+            localStorage.setItem('direccion', direccion);
+        } else {
+            localStorage.removeItem('nombre');
+            localStorage.removeItem('direccion');
+        }
 
-        window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
+        const dia = document.getElementById('diaSemana').value;
+        const plato = document.getElementById('platoSeleccionado').value;
+        const bebida = document.getElementById('bebida').value;
+        let extras = [];
+        document.querySelectorAll('input[name="extra"]:checked').forEach(e => extras.push(e.value));
+        
+        const msg = `*NUEVO PEDIDO (${dia.toUpperCase()})*%0A` +
+                    `--------------------------%0A` +
+                    `*Cliente:* ${nombre}%0A` +
+                    `*Plato:* ${plato}%0A` +
+                    `*Adicionales:* ${extras.length > 0 ? extras.join(", ") : "Ninguno"}%0A` +
+                    `*Bebida:* ${bebida}%0A` +
+                    `*Dirección:* ${direccion}%0A` +
+                    `--------------------------`;
+
+        window.open(`https://wa.me/573143996019?text=${msg}`, '_blank');
     }
 </script>
 
