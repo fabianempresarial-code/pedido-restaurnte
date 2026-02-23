@@ -91,8 +91,10 @@
     function inicializarApp() {
         const hoy = new Date();
         const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-        const nombreDia = dias[hoy.getDay()];
-        document.getElementById('fechaHoy').innerText = `Hoy es ${nombreDia} ${hoy.getDate()}/${hoy.getMonth()+1}`;
+       const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const fechaLarga = hoy.toLocaleDateString('es-ES', opciones);
+
+document.getElementById('fechaHoy').innerText = `Hoy es ${fechaLarga}`;
         
         const selectDia = document.getElementById('diaSemana');
         selectDia.value = (hoy.getDay() === 0) ? "Lunes" : nombreDia;
