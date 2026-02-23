@@ -3,33 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido Express - Menú Semanal</title>
+    <title>Pedido Online - Con Logotipo</title>
     <style>
-        :root { --primary: #e67e22; --whatsapp: #25d366; --bg: #fdfefe; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); padding: 15px; color: #2c3e50; }
-        .container { max-width: 480px; background: white; padding: 25px; border-radius: 20px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h2 { color: var(--primary); text-align: center; margin-bottom: 5px; }
-        .badge { background: #fff3e0; color: #e65100; padding: 5px 12px; border-radius: 15px; font-size: 0.8em; font-weight: bold; }
-        .section { margin-bottom: 20px; padding: 15px; background: #fafafa; border-radius: 12px; }
+        :root { --primary: #e67e22; --whatsapp: #25d366; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #B0C4DE
+          ; padding: 15px; color: #2c3e50; }
+        
+        .container { max-width: 480px; background: white; padding: 50px; border-radius: 50px; margin: auto; box-shadow: 10 5px 10px rgba(0,0,0,0.1); }
+        
+        /* ESTILO DEL LOGOTIPO */
+        .header-logo { text-align: center; margin-bottom: 20px; }
+        .header-logo img { 
+            max-width: 150px; /* Ajusta el tamaño de tu logo aquí */
+            height: auto; 
+            border-radius: 15px;
+            /* Si usas un GIF, esto lo mantiene limpio */
+        }
+
+        h2 { color: var(--primary); text-align: center; margin: 10px 0; }
+        .badge { background: #fff3e0; color: #e65100; padding: 6px 15px; border-radius: 20px; font-size: 0.85em; font-weight: bold; display: inline-block; }
+        
+        .section { margin-bottom: 18px; padding: 15px; background: #fafafa; border-radius: 15px; border: 1px solid #f0f0f0; }
         label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9em; }
-        select, input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; margin-bottom: 10px; }
-        .extra-item { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #eee; font-size: 0.9em; }
-        .btn-order { width: 100%; background: var(--whatsapp); color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer; transition: 0.3s; }
+        
+        select, input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; font-size: 15px; margin-bottom: 10px; }
+        
+        .extra-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.9em; cursor: pointer; }
+        
+        .btn-order { width: 100%; background: var(--whatsapp); color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 15px; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
         .btn-order:hover { background: #1ebd5a; transform: translateY(-2px); }
-        .remember-me { font-size: 0.85em; display: flex; align-items: center; gap: 8px; color: #666; cursor: pointer; }
+        
+        .remember-me { font-size: 0.85em; display: flex; align-items: center; gap: 8px; color: #666; margin-top: 5px; }
         .remember-me input { width: auto; margin: 0; }
     </style>
 </head>
 <body onload="inicializarApp()">
 
 <div class="container">
-    <h2>🍽️ Pedido El Sabor</h2>
-    <div style="text-align: center; margin-bottom: 15px;"><span id="fechaHoy" class="badge"></span></div>
+    <div class="header-logo">
+        <img src="https://www.gifss.com/profesiones/camareros/camarero-01.gif" alt="Logotipo del Restaurante" id="mainLogo">
+        <h2>Restaurante Gourmet</h2>
+        <span id="fechaHoy" class="badge">Cargando fecha...</span>
+    </div>
     
     <form id="orderForm">
         <div class="section">
-            <label>📅 Día:</label>
-            <select id="diaSemana" onchange="actualizarMenu()" style="background: #fff9c4;">
+            <label>📅 Día del Menú:</label>
+            <select id="diaSemana" onchange="actualizarMenu()" style="border-left: 5px solid var(--primary);">
                 <option value="Lunes">Lunes</option>
                 <option value="Martes">Martes</option>
                 <option value="Miércoles">Miércoles</option>
@@ -37,14 +57,14 @@
                 <option value="Viernes">Viernes</option>
                 <option value="Sábado">Sábado</option>
             </select>
-            <label>🍲 Plato Principal:</label>
+            <label>🍲 Elige tu Plato:</label>
             <select id="platoSeleccionado"></select>
         </div>
 
         <div class="section">
             <label>➕ Adicionales:</label>
-            <div class="extra-item"><input type="checkbox" name="extra" value="Aguacate"> Aguacate (+$2.000)</div>
-            <div class="extra-item"><input type="checkbox" name="extra" value="Huevo"> Huevo (+$1.500)</div>
+            <label class="extra-item"><input type="checkbox" name="extra" value="Aguacate"> Porción Aguacate (+$2.000)</label>
+            <label class="extra-item"><input type="checkbox" name="extra" value="Huevo"> Huevo Frito (+$1.500)</label>
             
             <label style="margin-top:15px;">🥤 Bebida:</label>
             <select id="bebida">
@@ -55,44 +75,52 @@
         </div>
 
         <div class="section">
-            <label>👤 Datos de Entrega:</label>
-            <input type="text" id="nombre" placeholder="Tu Nombre" required>
-            <input type="text" id="direccion" placeholder="Dirección y Barrio" required>
+            <label>👤 Datos de Envío:</label>
+            <input type="text" id="nombre" placeholder="Tu Nombre Completo" required>
+            <input type="text" id="direccion" placeholder="Dirección, Apto, Barrio" required>
+            
             <label class="remember-me">
-                <input type="checkbox" id="recordarDatos" checked> Recordar mis datos en este dispositivo
+                <input type="checkbox" id="recordarDatos" checked> Recordar mis datos para la próxima vez
             </label>
-            <textarea id="notas" rows="2" placeholder="Instrucciones adicionales..."></textarea>
+            
+            <textarea id="notas" rows="2" placeholder="Notas: Ej. Portería, sin cebolla, traer cambio de..." style="margin-top:10px;"></textarea>
         </div>
 
-        <button type="button" class="btn-order" onclick="enviarWhatsApp()">✅ Enviar a WhatsApp</button>
+        <button type="button" class="btn-order" onclick="enviarWhatsApp()">🚀 Pedir por WhatsApp</button>
     </form>
 </div>
 
 <script>
     const menus = {
-        "Lunes": ["Frijolada", "Pollo al Curry", "Pollo Sudado"],
-        "Martes": ["Carne Asada", "Pescado Frito"],
-        "Miércoles": ["Ajiaco", "Lomo de Cerdo"],
-        "Jueves": ["Sancocho", "Arroz con Pollo"],
+        "Lunes": ["Frijoles con Garra", "Pollo al Horno"],
+        "Martes": ["Carne en Salsa", "Pescado Apanado"],
+        "Miércoles": ["Ajiaco Santafereño", "Cerdo Grillé"],
+        "Jueves": ["Sancocho de Pollo", "Arroz Mixto"],
         "Viernes": ["Bandeja Paisa", "Sobrebarriga"],
-        "Sábado": ["Sancocho de Gallina", "Parrillada"]
+        "Sábado": ["Especial Parrilla", "Sancocho de Gallina"]
     };
 
     function inicializarApp() {
-        // 1. Detectar fecha
+        // 1. Detectar Día Actual Automáticamente
         const hoy = new Date();
         const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
         const nombreDia = dias[hoy.getDay()];
-        document.getElementById('fechaHoy').innerText = `Hoy es ${nombreDia}, ${hoy.getDate()}/${hoy.getMonth()+1}`;
         
+        const fechaTxt = `Hoy es ${nombreDia}, ${hoy.getDate()}/${hoy.getMonth()+1}`;
+        document.getElementById('fechaHoy').innerText = fechaTxt;
+        
+        // Seleccionar día (si es domingo, poner Lunes)
         const selectDia = document.getElementById('diaSemana');
-        if(hoy.getDay() !== 0) selectDia.value = nombreDia;
+        selectDia.value = (hoy.getDay() === 0) ? "Lunes" : nombreDia;
+        
         actualizarMenu();
 
-        // 2. Cargar datos recordados
-        if (localStorage.getItem('nombre')) {
-            document.getElementById('nombre').value = localStorage.getItem('nombre');
-            document.getElementById('direccion').value = localStorage.getItem('direccion');
+        // 2. Cargar Datos Recordados (LocalStorage)
+        if (localStorage.getItem('user_nombre')) {
+            document.getElementById('nombre').value = localStorage.getItem('user_nombre');
+        }
+        if (localStorage.getItem('user_direccion')) {
+            document.getElementById('direccion').value = localStorage.getItem('user_direccion');
         }
     }
 
@@ -112,35 +140,42 @@
         const direccion = document.getElementById('direccion').value;
 
         if (!nombre || !direccion) {
-            alert("Por favor completa tus datos.");
+            alert("Por favor, ingresa tu nombre y dirección.");
             return;
         }
 
-        // Guardar datos si el check está activo
+        // Lógica de Recordar Datos
         if (document.getElementById('recordarDatos').checked) {
-            localStorage.setItem('nombre', nombre);
-            localStorage.setItem('direccion', direccion);
+            localStorage.setItem('user_nombre', nombre);
+            localStorage.setItem('user_direccion', direccion);
         } else {
-            localStorage.removeItem('nombre');
-            localStorage.removeItem('direccion');
+            localStorage.removeItem('user_nombre');
+            localStorage.removeItem('user_direccion');
         }
 
+        // Capturar información de pedido
         const dia = document.getElementById('diaSemana').value;
         const plato = document.getElementById('platoSeleccionado').value;
         const bebida = document.getElementById('bebida').value;
+        const notas = document.getElementById('notas').value || "Ninguna";
+        
         let extras = [];
         document.querySelectorAll('input[name="extra"]:checked').forEach(e => extras.push(e.value));
-        
-        const msg = `*NUEVO PEDIDO (${dia.toUpperCase()})*%0A` +
+        const extrasTxt = extras.length > 0 ? extras.join(", ") : "Ninguno";
+
+        // URL de WhatsApp (Cambia el número aquí)
+        const telefono = "3143996019"; 
+        const msg = `*PEDIDO: ${dia.toUpperCase()}*%0A` +
                     `--------------------------%0A` +
-                    `*Cliente:* ${nombre}%0A` +
-                    `*Plato:* ${plato}%0A` +
-                    `*Adicionales:* ${extras.length > 0 ? extras.join(", ") : "Ninguno"}%0A` +
-                    `*Bebida:* ${bebida}%0A` +
-                    `*Dirección:* ${direccion}%0A` +
+                    `👤 *Cliente:* ${nombre}%0A` +
+                    `🍲 *Plato:* ${plato}%0A` +
+                    `➕ *Extras:* ${extrasTxt}%0A` +
+                    `🥤 *Bebida:* ${bebida}%0A` +
+                    `🏠 *Dirección:* ${direccion}%0A` +
+                    `💬 *Notas:* ${notas}%0A` +
                     `--------------------------`;
 
-        window.open(`https://wa.me/573143996019?text=${msg}`, '_blank');
+        window.open(`https://wa.me/${telefono}?text=${msg}`, '_blank');
     }
 </script>
 
