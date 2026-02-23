@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Express - WhatsApp</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; padding: 20px; color: #333; }
+        .container { max-width: 450px; background: white; padding: 25px; border-radius: 15px; margin: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h2 { color: #25d366; text-align: center; margin-top: 0; }
+        p { text-align: center; font-size: 0.9em; color: #666; }
+        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 10px; }
+        label { display: block; margin: 10px 0 5px; font-weight: 600; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .radio-group { display: flex; gap: 15px; padding: 5px 0; }
+        button { width: 100%; background: #25d366; color: white; border: none; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #128c7e; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🍗 Pedido por WhatsApp</h2>
+    <p>Completa tu pedido y te contactaremos de inmediato.</p>
+    
+    <form id="orderForm">
+        <div class="section">
+            <label>🍴 Plato del Día:</label>
+            <select id="plato" required>
+                <option value="">-- Selecciona tu almuerzo --</option>
+                <option value="Pollo al Horno">Pollo al Horno + Puré</option>
+                <option value="Lasaña Boloñesa">Lasaña Boloñesa</option>
+                <option value="Bowl Vegetariano">Bowl Vegetariano</option>
+                <option value="Carne en bistek">Carne en bistek</option>
+            </select>
+
+            <label>🥤 Bebida:</label>
+            <div class="radio-group">
+                <label style="font-weight: normal;"><input type="radio" name="bebida" value="Limonada" checked> Limonada</label>
+                <label style="font-weight: normal;"><input type="radio" name="bebida" value="Té Hielo"> Té Hielo</label>
+            </div>
+        </div>
+
+        <div class="section">
+            <label>👤 Tu Nombre:</label>
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+
+            <label>🏠 Dirección de Entrega:</label>
+            <input type="text" id="direccion" placeholder="Calle, Barrio, Apto" required>
+
+            <label>💬 Nota Adicional:</label>
+            <textarea id="notas" rows="2" placeholder="Ej: Sin cebolla, llevar cambio de $50.000..."></textarea>
+        </div>
+
+        <button type="button" onclick="enviarWhatsApp()">🚀 Enviar Pedido por WhatsApp</button>
+    </form>
+</div>
+
+<script>
+    function enviarWhatsApp() {
+        // --- CONFIGURA AQUÍ TU NÚMERO ---
+        const telefonoRestaurante = "573143996019"; // Código de país + número (sin el signo +)
+
+        // Captura de datos
+        const plato = document.getElementById('plato').value;
+        const bebida = document.querySelector('input[name="bebida"]:checked').value;
+        const nombre = document.getElementById('nombre').value;
+        const direccion = document.getElementById('direccion').value;
+        const notas = document.getElementById('notas').value || "Ninguna";
+
+        // Validación básica
+        if (!plato || !nombre || !direccion) {
+            alert("Por favor, completa los campos principales.");
+            return;
+        }
+
+        // Crear el mensaje para WhatsApp
+        const mensaje = `*NUEVO PEDIDO* 📝%0A` +
+                        `--------------------------%0A` +
+                        `*Cliente:* ${nombre}%0A` +
+                        `*Plato:* ${plato}%0A` +
+                        `*Bebida:* ${bebida}%0A` +
+                        `*Dirección:* ${direccion}%0A` +
+                        `*Notas:* ${notas}%0A` +
+                        `--------------------------%0A` +
+                        `_Enviado desde el formulario web_`;
+
+        // Abrir URL de WhatsApp
+        const url = `https://wa.me/${+573143996019}?text=${mensaje}`;
+        window.open(url, '_blank');
+    }
+</script>
+
+</body>
+</html>
