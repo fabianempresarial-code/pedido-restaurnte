@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedido Online - Versión Pro</title>
     <style>
-        :root { --primary: #e67e22; --whatsapp: #25d366; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: #800000; padding: 15px; color: #2c3e50; }
-        .container { max-width: 480px; background: white; padding: 25px; border-radius: 50px; margin: auto; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .header-logo { text-align: center; margin-bottom: 20px; }
+      
+        :root { --primary: #e67e22; --whatsapp: #25d366; --bg: #f4f7f9; }
+        body { font-family: 'Segoe UI', sans-serif; background-image: url('https://i.imgur.com/UOPlh0M.jpeg'); background-size: cover; background-repeat: no-repeat;">; padding: 10px; color: #800000; }
+        .container { max-width: 480px; background: WHITE; padding: 50px; border-radius: 50px; margin: auto; box-shadow: 0 30px 10px rgba(0,0,0,0.1); }
+        .header-logo { text-align: center; margin-bottom: 50px; }
         .header-logo img { max-width: 150px; height: auto; border-radius: 15px; }
         h2 { color: var(--primary); text-align: center; margin: 10px 0; }
         .badge { background: #fff3e0; color: #e65100; padding: 6px 15px; border-radius: 20px; font-size: 0.85em; font-weight: bold; display: inline-block; }
@@ -23,6 +24,8 @@
     </style>
 </head>
 <body onload="inicializarApp()">
+  
+    
 
 <div class="container">
     <div class="header-logo">
@@ -147,7 +150,7 @@
                              `--------------------------`;
 
         // encodeURIComponent convierte el # en %23 automáticamente
-        const urlWhatsApp = `https://wa.me/573143996019?text=${encodeURIComponent(textoMensaje)}`;
+        const urlWhatsApp = `https://wa.me/573001234567?text=${encodeURIComponent(textoMensaje)}`;
         
         window.open(urlWhatsApp, '_blank');
     }
@@ -155,3 +158,6 @@
 
 </body>
 </html>
+
+
+
