@@ -91,13 +91,20 @@
     function inicializarApp() {
         const hoy = new Date();
         const dias = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-       const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-const fechaLarga = hoy.toLocaleDateString('es-ES', opciones);
+        const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+let fechaLarga = hoy.toLocaleDateString('es-ES', opciones);
+
+// Convertir la primera letra a mayúscula para que se vea más profesional
+fechaLarga = fechaLarga.charAt(0).toUpperCase() + fechaLarga.slice(1);
 
 document.getElementById('fechaHoy').innerText = `Hoy es ${fechaLarga}`;
-        
-        const selectDia = document.getElementById('diaSemana');
-        selectDia.value = (hoy.getDay() === 0) ? "Lunes" : nombreDia;
+
+const selectDia = document.getElementById('diaSemana');
+// Usamos el nombre del día (nombreDia) definido previamente o extraído de la fecha
+const nombreDia = hoy.toLocaleDateString('es-ES', { weekday: 'long' });
+const nombreDiaCapitalizado = nombreDia.charAt(0).toUpperCase() + nombreDia.slice(1);
+
+selectDia.value = (hoy.getDay() === 0) ? "Lunes" : nombreDiaCapitalizado;
         
         actualizarMenu();
 
